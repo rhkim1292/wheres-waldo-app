@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.31d6cfe0.css",
-    "main.js": "/static/js/main.321c5705.js",
-    "static/media/mario.jpg": "/static/media/mario.7dda37c4454d6cc034b8.jpg",
-    "index.html": "/index.html",
-    "main.321c5705.js.map": "/static/js/main.321c5705.js.map"
+    "main.css": "/wheres-waldo-app/static/css/main.af530582.css",
+    "main.js": "/wheres-waldo-app/static/js/main.be5b2693.js",
+    "static/media/mario.jpg": "/wheres-waldo-app/static/media/mario.7dda37c4454d6cc034b8.jpg",
+    "index.html": "/wheres-waldo-app/index.html",
+    "main.af530582.css.map": "/wheres-waldo-app/static/css/main.af530582.css.map",
+    "main.be5b2693.js.map": "/wheres-waldo-app/static/js/main.be5b2693.js.map"
   },
   "entrypoints": [
-    "static/css/main.31d6cfe0.css",
-    "static/js/main.321c5705.js"
+    "static/css/main.af530582.css",
+    "static/js/main.be5b2693.js"
   ]
 }
