@@ -1,6 +1,6 @@
 import './styles/App.css';
 import mario from './images/mario.jpg';
-// import { useEffect } from 'react';
+import { useState } from 'react';
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from 'firebase/app';
 // import { getAnalytics } from 'firebase/analytics';
@@ -22,15 +22,44 @@ import mario from './images/mario.jpg';
 // const analytics = getAnalytics(app);
 
 function App() {
+  const [userIsTagging, setUserIsTagging] = useState(false);
   const onMouseMove = (e) => {
     const targetingArea = document.querySelector('div.targeting-area');
+    if (userIsTagging) return;
     targetingArea.style.left = e.pageX + 'px';
     targetingArea.style.top = e.pageY + 'px';
+    // console.log('Page X: ', e.pageX);
+    // console.log('Page Y: ', e.pageY);
+  };
+
+  const onClick = (e) => {
+    if (userIsTagging) {
+      const targetingArea = document.querySelector('div.targeting-area');
+      targetingArea.style.left = e.pageX + 'px';
+      targetingArea.style.top = e.pageY + 'px';
+      setUserIsTagging(false);
+    } else {
+      const rect = e.target.getBoundingClientRect();
+      const imageX = e.clientX - rect.left;
+      const imageY = e.clientY - rect.top;
+      const imageXpercent = imageX / rect.width;
+      const imageYpercent = imageY / rect.height;
+      console.log('X%: ', imageXpercent);
+      console.log('Y%: ', imageYpercent);
+      console.log('Left? : ' + imageX + ' ; Top? : ' + imageY + '.');
+      setUserIsTagging(true);
+    }
   };
 
   return (
-    <div className="App" onMouseMove={onMouseMove}>
-      <img src={mario} className="game-image" alt="mario game"></img>
+    <div className="App">
+      <img
+        src={mario}
+        className="game-image"
+        alt="mario game"
+        onMouseMove={onMouseMove}
+        onClick={onClick}
+      />
       <div className="targeting-area"></div>
     </div>
   );
