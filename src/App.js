@@ -1,5 +1,6 @@
 import './styles/App.css';
 import mario from './images/mario.jpg';
+// import { useEffect } from 'react';
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from 'firebase/app';
 // import { getAnalytics } from 'firebase/analytics';
@@ -21,8 +22,8 @@ import mario from './images/mario.jpg';
 // const analytics = getAnalytics(app);
 
 function App() {
-  let targetingArea = document.querySelector('div.targeting-area');
   const onMouseMove = (e) => {
+    const targetingArea = document.querySelector('div.targeting-area');
     targetingArea.style.left = e.pageX + 'px';
     targetingArea.style.top = e.pageY + 'px';
   };
