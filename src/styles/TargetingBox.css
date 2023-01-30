@@ -1,0 +1,36 @@
+div.targeting-box {
+  width: 4vw;
+  height: 4vw;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border: 2px solid black;
+  background-color: rgba(0, 0, 0, 0.551);
+  pointer-events: none;
+}
+
+div.character-picker {
+  position: absolute;
+  right: -89px;
+  top: -20px;
+  background-color: aliceblue;
+  border-radius: 5px;
+  border: 2px solid black;
+}
+
+div.character-picker ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+div.character-picker ul li {
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+div.character-picker ul li:hover {
+  background-color: rgb(219, 227, 233);
+}

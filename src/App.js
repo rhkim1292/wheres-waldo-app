@@ -1,6 +1,9 @@
 import './styles/App.css';
 import mario from './images/mario.jpg';
 import { useState } from 'react';
+import GameImage from './components/GameImage';
+import TargetingBox from './components/TargetingBox';
+
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from 'firebase/app';
 // import { getAnalytics } from 'firebase/analytics';
@@ -23,8 +26,19 @@ import { useState } from 'react';
 
 function App() {
   const [userIsTagging, setUserIsTagging] = useState(false);
+  const listOfChars = [
+    {
+      name: 'Yoshi Egg',
+    },
+    {
+      name: 'Super Bell',
+    },
+    {
+      name: 'Cappy',
+    },
+  ];
   const onMouseMove = (e) => {
-    const targetingArea = document.querySelector('div.targeting-area');
+    const targetingArea = document.querySelector('div.targeting-box');
     if (userIsTagging) return;
     targetingArea.style.left = e.pageX + 'px';
     targetingArea.style.top = e.pageY + 'px';
@@ -32,9 +46,9 @@ function App() {
     // console.log('Page Y: ', e.pageY);
   };
 
-  const onClick = (e) => {
+  const handleClick = (e) => {
     if (userIsTagging) {
-      const targetingArea = document.querySelector('div.targeting-area');
+      const targetingArea = document.querySelector('div.targeting-box');
       targetingArea.style.left = e.pageX + 'px';
       targetingArea.style.top = e.pageY + 'px';
       setUserIsTagging(false);
@@ -53,14 +67,12 @@ function App() {
 
   return (
     <div className="App">
-      <img
-        src={mario}
-        className="game-image"
-        alt="mario game"
+      <GameImage
+        imgSrc={mario}
         onMouseMove={onMouseMove}
-        onClick={onClick}
+        handleClick={handleClick}
       />
-      <div className="targeting-area"></div>
+      <TargetingBox listOfChars={listOfChars} userIsTagging={userIsTagging} />
     </div>
   );
 }
