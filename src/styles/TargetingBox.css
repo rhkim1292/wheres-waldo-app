@@ -1,6 +1,12 @@
+:root {
+  --ch-picker-width: 6.5vw;
+  --ch-picker-height: calc(var(--ch-picker-width) * 0.8755);
+  --targeting-box-width: 4vw;
+}
+
 div.targeting-box {
-  width: 4vw;
-  height: 4vw;
+  width: var(--targeting-box-width);
+  height: var(--targeting-box-width);
   position: absolute;
   transform: translate(-50%, -50%);
   border: 2px solid black;
@@ -9,9 +15,10 @@ div.targeting-box {
 }
 
 div.character-picker {
-  position: absolute;
-  right: -89px;
-  top: -20px;
+  position: relative;
+  width: var(--ch-picker-width);
+  right: -100%;
+  top: calc(var(--targeting-box-width) * -0.23);
   background-color: aliceblue;
   border-radius: 5px;
   border: 2px solid black;
@@ -24,11 +31,12 @@ div.character-picker ul {
 }
 
 div.character-picker ul li {
-  padding: 5px 10px;
+  padding: 0.25vw 0.5vw;
   border-radius: 5px;
   text-align: center;
   cursor: pointer;
   pointer-events: all;
+  font-size: 1.2vw;
 }
 
 div.character-picker ul li:hover {
