@@ -1,6 +1,6 @@
 import './styles/App.css';
 import mario from './images/mario.jpg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import GameImage from './components/GameImage';
 import TargetingBox from './components/TargetingBox';
 
@@ -29,49 +29,95 @@ function App() {
   const listOfChars = [
     {
       name: 'Yoshi Egg',
+      className: 'yoshi-egg-box',
+      charRect: null,
+      // charRect: document
+      //   .querySelector('div.yoshi-egg-box')
+      //   .getBoundingClientRect(),
     },
     {
       name: 'Super Bell',
+      className: 'super-bell-box',
+      charRect: null,
+      // charRect: document
+      //   .querySelector('div.super-bell-box')
+      //   .getBoundingClientRect(),
     },
     {
       name: 'Cappy',
+      className: 'cappy-box',
+      charRect: null,
+      // charRect: document.querySelector('div.cappy-box').getBoundingClientRect(),
     },
   ];
+  useEffect(() => {
+    const targetingArea = document.querySelector('div.targeting-box');
+    const targetingAreaRect = targetingArea.getBoundingClientRect();
+    for (let i = 0; i < listOfChars.length; i += 1) {
+      listOfChars[i].charRect = document
+        .querySelector(`div.${listOfChars[i].className}`)
+        .getBoundingClientRect();
+    }
+
+    if (userIsTagging) {
+      for (let i = 0; i < listOfChars.length; i += 1) {
+        console.log(
+          `Overlapping ${listOfChars[i].name}: ${checkOverlap(
+            listOfChars[i].charRect,
+            targetingAreaRect
+          )}`
+        );
+      }
+    }
+  });
+
+  const checkOverlap = (rect1, rect2) => {
+    return !(
+      rect1.right < rect2.left ||
+      rect1.left > rect2.right ||
+      rect1.bottom < rect2.top ||
+      rect1.top > rect2.bottom
+    );
+  };
+
   const onMouseMove = (e) => {
     const targetingArea = document.querySelector('div.targeting-box');
     if (userIsTagging) return;
     targetingArea.style.left = e.pageX + 'px';
     targetingArea.style.top = e.pageY + 'px';
-    // console.log('Page X: ', e.pageX);
-    // console.log('Page Y: ', e.pageY);
   };
 
   const handleClick = (e) => {
+    const targetingArea = document.querySelector('div.targeting-box');
+    targetingArea.style.left = e.pageX + 'px';
+    targetingArea.style.top = e.pageY + 'px';
     if (userIsTagging) {
-      const targetingArea = document.querySelector('div.targeting-box');
-      targetingArea.style.left = e.pageX + 'px';
-      targetingArea.style.top = e.pageY + 'px';
       setUserIsTagging(false);
     } else {
-      const rect = e.target.getBoundingClientRect();
-      const imageX = e.clientX - rect.left;
-      const imageY = e.clientY - rect.top;
-      const imageXpercent = imageX / rect.width;
-      const imageYpercent = imageY / rect.height;
-      console.log('X%: ', imageXpercent);
-      console.log('Y%: ', imageYpercent);
-      console.log('Left? : ' + imageX + ' ; Top? : ' + imageY + '.');
       setUserIsTagging(true);
+      // const rect = e.target.getBoundingClientRect();
+      // const imageX = e.clientX - rect.left;
+      // const imageY = e.clientY - rect.top;
+      // const imageXpercent = imageX / rect.width;
+      // const imageYpercent = imageY / rect.height;
+      // console.log('X%: ', imageXpercent);
+      // console.log('Y%: ', imageYpercent);
+      // console.log('Left? : ' + imageX + ' ; Top? : ' + imageY + '.');
     }
   };
 
   return (
     <div className="App">
-      <GameImage
-        imgSrc={mario}
-        onMouseMove={onMouseMove}
-        handleClick={handleClick}
-      />
+      <div className="game-container">
+        <GameImage
+          imgSrc={mario}
+          onMouseMove={onMouseMove}
+          handleClick={handleClick}
+        />
+        <div className={listOfChars[0].className + ' char-box'}></div>
+        <div className={listOfChars[1].className + ' char-box'}></div>
+        <div className={listOfChars[2].className + ' char-box'}></div>
+      </div>
       <TargetingBox listOfChars={listOfChars} userIsTagging={userIsTagging} />
     </div>
   );

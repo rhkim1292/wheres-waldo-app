@@ -1,3 +1,34 @@
+div.App {
+  display: flex;
+}
 div.App img.game-image {
-  width: 100vw;
+  width: 98.8vw;
+}
+
+div.game-container {
+  position: relative;
+  display: flex;
+}
+
+div.char-box {
+  width: 0.7vw;
+  height: 0.7vw;
+  background-color: hsla(208, 100%, 97%, 0.755);
+  position: absolute;
+  pointer-events: none;
+}
+
+div.yoshi-egg-box {
+  top: 31.08%;
+  left: 44.45%;
+}
+
+div.super-bell-box {
+  top: 49.5%;
+  left: 7.5%;
+}
+
+div.cappy-box {
+  top: 76.3%;
+  left: 59.66%;
 }
