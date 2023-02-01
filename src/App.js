@@ -5,23 +5,25 @@ import GameImage from './components/GameImage';
 import TargetingBox from './components/TargetingBox';
 
 // Import the functions you need from the SDKs you need
-// import { initializeApp } from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 // import { getAnalytics } from 'firebase/analytics';
 
 // TODO: Add SDKs for Firebase products that you want to use
+import { getFirestore } from 'firebase/firestore';
 
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyB4Ob5qUsKzmz_fe_4Kg8nHFz0MK4C0P6k',
-//   authDomain: 'wheres-waldo-a0579.firebaseapp.com',
-//   projectId: 'wheres-waldo-a0579',
-//   storageBucket: 'wheres-waldo-a0579.appspot.com',
-//   messagingSenderId: '758994543776',
-//   appId: '1:758994543776:web:8b0dbe5db3a74ba83c15c5',
-//   measurementId: 'G-ZK1W58YTZ1',
-// };
+const firebaseConfig = {
+  apiKey: 'AIzaSyB4Ob5qUsKzmz_fe_4Kg8nHFz0MK4C0P6k',
+  authDomain: 'wheres-waldo-a0579.firebaseapp.com',
+  projectId: 'wheres-waldo-a0579',
+  storageBucket: 'wheres-waldo-a0579.appspot.com',
+  messagingSenderId: '758994543776',
+  appId: '1:758994543776:web:8b0dbe5db3a74ba83c15c5',
+  measurementId: 'G-ZK1W58YTZ1',
+};
 
 // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 // const analytics = getAnalytics(app);
 
 function App() {
@@ -30,53 +32,57 @@ function App() {
     {
       name: 'Yoshi Egg',
       className: 'yoshi-egg-box',
-      charRect: null,
-      // charRect: document
-      //   .querySelector('div.yoshi-egg-box')
-      //   .getBoundingClientRect(),
     },
     {
       name: 'Super Bell',
       className: 'super-bell-box',
-      charRect: null,
-      // charRect: document
-      //   .querySelector('div.super-bell-box')
-      //   .getBoundingClientRect(),
     },
     {
       name: 'Cappy',
       className: 'cappy-box',
-      charRect: null,
-      // charRect: document.querySelector('div.cappy-box').getBoundingClientRect(),
     },
   ];
   useEffect(() => {
     const targetingArea = document.querySelector('div.targeting-box');
     const targetingAreaRect = targetingArea.getBoundingClientRect();
+    const gameImageRect = document
+      .querySelector('img.game-image')
+      .getBoundingClientRect();
     for (let i = 0; i < listOfChars.length; i += 1) {
-      listOfChars[i].charRect = document
+      const currCharRect = document
         .querySelector(`div.${listOfChars[i].className}`)
         .getBoundingClientRect();
+      listOfChars[i] = {
+        ...listOfChars[i],
+        ...convertToPctCoord(gameImageRect, currCharRect),
+      };
     }
 
     if (userIsTagging) {
       for (let i = 0; i < listOfChars.length; i += 1) {
         console.log(
           `Overlapping ${listOfChars[i].name}: ${checkOverlap(
-            listOfChars[i].charRect,
-            targetingAreaRect
+            targetingAreaRect,
+            listOfChars[i]
           )}`
         );
       }
     }
   });
 
-  const checkOverlap = (rect1, rect2) => {
+  const checkOverlap = (targetingBoxRect, charObj) => {
+    const gameImageRect = document
+      .querySelector('img.game-image')
+      .getBoundingClientRect();
     return !(
-      rect1.right < rect2.left ||
-      rect1.left > rect2.right ||
-      rect1.bottom < rect2.top ||
-      rect1.top > rect2.bottom
+      targetingBoxRect.right <
+        convertToPixelCoord(charObj.leftPct, gameImageRect.width) ||
+      targetingBoxRect.left >
+        convertToPixelCoord(charObj.rightPct, gameImageRect.width) ||
+      targetingBoxRect.bottom <
+        convertToPixelCoord(charObj.topPct, gameImageRect.height) ||
+      targetingBoxRect.top >
+        convertToPixelCoord(charObj.bottomPct, gameImageRect.height)
     );
   };
 
@@ -95,15 +101,20 @@ function App() {
       setUserIsTagging(false);
     } else {
       setUserIsTagging(true);
-      // const rect = e.target.getBoundingClientRect();
-      // const imageX = e.clientX - rect.left;
-      // const imageY = e.clientY - rect.top;
-      // const imageXpercent = imageX / rect.width;
-      // const imageYpercent = imageY / rect.height;
-      // console.log('X%: ', imageXpercent);
-      // console.log('Y%: ', imageYpercent);
-      // console.log('Left? : ' + imageX + ' ; Top? : ' + imageY + '.');
     }
+  };
+
+  const convertToPctCoord = (baseRect, targetRect) => {
+    return {
+      topPct: targetRect.top / baseRect.height,
+      rightPct: targetRect.right / baseRect.width,
+      bottomPct: targetRect.bottom / baseRect.height,
+      leftPct: targetRect.left / baseRect.width,
+    };
+  };
+
+  const convertToPixelCoord = (pctVal, totalPixelSize) => {
+    return pctVal * totalPixelSize;
   };
 
   return (
