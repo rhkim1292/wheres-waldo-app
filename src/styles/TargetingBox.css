@@ -24,7 +24,7 @@ div.character-picker {
   position: relative;
   width: var(--ch-picker-width);
   right: -100%;
-  top: calc(var(--targeting-box-width) * -0.23);
+  /* top: calc(var(--targeting-box-width) * 0.5); */
   background-color: hsla(208, 100%, 97%, 0.75);
   border-radius: 5px;
   border: 2px solid black;
@@ -47,5 +47,5 @@ div.character-picker ul li {
 }
 
 div.character-picker ul li:hover {
-  background-color: hsla(208, 100%, 97%, 0.85);;
+  background-color: hsla(208, 100%, 97%, 0.85);
 }

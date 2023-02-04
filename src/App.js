@@ -57,76 +57,6 @@ function App() {
       }
     }
   });
-  // const setupFirestore = async () => {
-  //   const yoshiEggRef = doc(db, 'marioImage', 'Yoshi Egg');
-  //   const superBellRef = doc(db, 'marioImage', 'Super Bell');
-  //   const cappyRef = doc(db, 'marioImage', 'Cappy');
-  //   const yoshiEggSnap = await getDoc(yoshiEggRef);
-  //   const superBellSnap = await getDoc(superBellRef);
-  //   const cappySnap = await getDoc(cappyRef);
-  //   // if (yoshiEggSnap.exists()) {
-  //   // } else {
-  //   //   try {
-  //   //     await setDoc(
-  //   //       yoshiEggRef,
-  //   //       {
-  //   //         name: 'Yoshi Egg',
-  //   //         className: 'yoshi-egg-box',
-  //   //         topPct: 0.31079254348108265,
-  //   //         rightPct: 0.4515764354013641,
-  //   //         bottomPct: 0.3158496974908236,
-  //   //         leftPct: 0.44449532673502434,
-  //   //       },
-  //   //       { merge: true }
-  //   //     );
-  //   //     console.log('Document written with ID: ', yoshiEggRef);
-  //   //   } catch (e) {
-  //   //     console.error('Error adding document: ', e);
-  //   //   }
-  //   // }
-
-  //   // if (superBellSnap.exists()) {
-  //   // } else {
-  //   //   try {
-  //   //     await setDoc(
-  //   //       superBellRef,
-  //   //       {
-  //   //         name: 'Super Bell',
-  //   //         className: 'super-bell-box',
-  //   //         topPct: 0.49499280139667745,
-  //   //         rightPct: 0.08207475359172364,
-  //   //         bottomPct: 0.5000499554064184,
-  //   //         leftPct: 0.07499364492538392,
-  //   //       },
-  //   //       { merge: true }
-  //   //     );
-  //   //     console.log('Document written with ID: ', superBellRef);
-  //   //   } catch (e) {
-  //   //     console.error('Error adding document: ', e);
-  //   //   }
-  //   // }
-
-  //   // if (cappySnap.exists()) {
-  //   // } else {
-  //   //   try {
-  //   //     await setDoc(
-  //   //       cappyRef,
-  //   //       {
-  //   //         name: 'Cappy',
-  //   //         className: 'cappy-box',
-  //   //         topPct: 0.7629947210242302,
-  //   //         rightPct: 0.603674057429621,
-  //   //         bottomPct: 0.7680518750339711,
-  //   //         leftPct: 0.5965929487632813,
-  //   //       },
-  //   //       { merge: true }
-  //   //     );
-  //   //     console.log('Document written with ID: ', cappyRef);
-  //   //   } catch (e) {
-  //   //     console.error('Error adding document: ', e);
-  //   //   }
-  //   // }
-  // };
 
   const checkOverlap = (targetingBoxRect, charObj) => {
     const gameImageRect = document
@@ -151,7 +81,7 @@ function App() {
     targetingArea.style.top = e.pageY + 'px';
   };
 
-  const handleClick = (e) => {
+  const handleImgClick = (e) => {
     const targetingArea = document.querySelector('div.targeting-box');
     targetingArea.style.left = e.pageX + 'px';
     targetingArea.style.top = e.pageY + 'px';
@@ -162,14 +92,26 @@ function App() {
     }
   };
 
-  // const convertToPctCoord = (baseRect, targetRect) => {
-  //   return {
-  //     topPct: (targetRect.top + window.scrollY) / baseRect.height,
-  //     rightPct: (targetRect.right + window.scrollX) / baseRect.width,
-  //     bottomPct: (targetRect.bottom + window.scrollY) / baseRect.height,
-  //     leftPct: (targetRect.left + window.scrollX) / baseRect.width,
-  //   };
-  // };
+  const handleCharClick = (e) => {
+    const charToCheck = e.target.textContent;
+    const targetingArea = document.querySelector('div.targeting-box');
+    const targetingAreaRect = targetingArea.getBoundingClientRect();
+    targetingArea.style.left = e.pageX + 'px';
+    targetingArea.style.top = e.pageY + 'px';
+    for (let i = 0; i < listOfChars.length; i += 1) {
+      if (listOfChars[i].name === charToCheck) {
+        if (checkOverlap(targetingAreaRect, listOfChars[i])) {
+          setListOfChars(
+            listOfChars.filter((currChar, index) => {
+              if (currChar.name !== charToCheck) return currChar;
+              return null;
+            })
+          );
+        }
+      }
+    }
+    setUserIsTagging(false);
+  };
 
   const convertToPixelCoord = (pctVal, totalPixelSize) => {
     return pctVal * totalPixelSize;
@@ -181,10 +123,14 @@ function App() {
         <GameImage
           imgSrc={mario}
           onMouseMove={onMouseMove}
-          handleClick={handleClick}
+          handleClick={handleImgClick}
         />
       </div>
-      <TargetingBox listOfChars={listOfChars} userIsTagging={userIsTagging} />
+      <TargetingBox
+        listOfChars={listOfChars}
+        userIsTagging={userIsTagging}
+        handleCharClick={handleCharClick}
+      />
     </div>
   );
 }

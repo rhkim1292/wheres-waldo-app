@@ -7,7 +7,11 @@ function TargetingBox(props) {
         <div className="character-picker">
           <ul>
             {props.listOfChars.map((char, idx) => {
-              return <li key={char.name}>{char.name}</li>;
+              return (
+                <li key={char.name} onClick={props.handleCharClick}>
+                  {char.name}
+                </li>
+              );
             })}
           </ul>
         </div>
