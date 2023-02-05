@@ -3,6 +3,7 @@ import mario from './images/mario.jpg';
 import { useState, useEffect } from 'react';
 import GameImage from './components/GameImage';
 import TargetingBox from './components/TargetingBox';
+import GameAlerts from './components/GameAlerts';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
@@ -29,6 +30,9 @@ const db = getFirestore(app);
 function App() {
   const [userIsTagging, setUserIsTagging] = useState(false);
   const [listOfChars, setListOfChars] = useState([]);
+  const [displayingAlert, setDisplayingAlert] = useState(false);
+  const [charFound, setCharFound] = useState(false);
+  const [foundCharName, setFoundCharName] = useState('');
 
   useEffect(() => {
     const retrieveCharData = async () => {
@@ -41,22 +45,6 @@ function App() {
     };
     retrieveCharData();
   }, []);
-
-  useEffect(() => {
-    const targetingArea = document.querySelector('div.targeting-box');
-    const targetingAreaRect = targetingArea.getBoundingClientRect();
-
-    if (userIsTagging) {
-      for (let i = 0; i < listOfChars.length; i += 1) {
-        console.log(
-          `Overlapping ${listOfChars[i].name}: ${checkOverlap(
-            targetingAreaRect,
-            listOfChars[i]
-          )}`
-        );
-      }
-    }
-  });
 
   const checkOverlap = (targetingBoxRect, charObj) => {
     const gameImageRect = document
@@ -102,11 +90,17 @@ function App() {
       if (listOfChars[i].name === charToCheck) {
         if (checkOverlap(targetingAreaRect, listOfChars[i])) {
           setListOfChars(
-            listOfChars.filter((currChar, index) => {
+            listOfChars.filter((currChar) => {
               if (currChar.name !== charToCheck) return currChar;
               return null;
             })
           );
+          setCharFound(true);
+          setFoundCharName(charToCheck);
+          setDisplayingAlert(true);
+        } else {
+          setCharFound(false);
+          setDisplayingAlert(true);
         }
       }
     }
@@ -116,6 +110,37 @@ function App() {
   const convertToPixelCoord = (pctVal, totalPixelSize) => {
     return pctVal * totalPixelSize;
   };
+
+  const displayAlert = () => {
+    if (charFound) {
+      return (
+        <GameAlerts
+          displayedText={`You found ${foundCharName}!`}
+          bgColor="#080"
+          display="block"
+          setDisplayingAlert={setDisplayingAlert}
+          delay={3000}
+        />
+      );
+    } else {
+      return (
+        <GameAlerts
+          displayedText={`Wrong! Keep looking!`}
+          bgColor="red"
+          display="block"
+          setDisplayingAlert={setDisplayingAlert}
+          delay={3000}
+        />
+      );
+    }
+  };
+
+  // const setAlertRemovalTimeout = (time) => {
+  //   setTimeout(() => {
+  //     const gameAlertDiv = document.querySelector('div.game-alert');
+  //     gameAlertDiv.display = 'none';
+  //   }, time);
+  // };
 
   return (
     <div className="App">
@@ -131,6 +156,7 @@ function App() {
         userIsTagging={userIsTagging}
         handleCharClick={handleCharClick}
       />
+      {displayingAlert ? displayAlert() : null}
     </div>
   );
 }

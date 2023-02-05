@@ -1,0 +1,10 @@
+div.game-alert {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: white;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
