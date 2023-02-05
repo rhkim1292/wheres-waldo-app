@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/wheres-waldo-app/static/css/main.4f60ece5.css",
-    "main.js": "/wheres-waldo-app/static/js/main.8c93b271.js",
+    "main.css": "/wheres-waldo-app/static/css/main.90815d6d.css",
+    "main.js": "/wheres-waldo-app/static/js/main.6451f8d5.js",
     "static/media/mario.jpg": "/wheres-waldo-app/static/media/mario.7dda37c4454d6cc034b8.jpg",
     "static/media/SuperMarioBros-ov7d.ttf": "/wheres-waldo-app/static/media/SuperMarioBros-ov7d.5cb94da1fd8966222fe1.ttf",
     "index.html": "/wheres-waldo-app/index.html",
-    "main.4f60ece5.css.map": "/wheres-waldo-app/static/css/main.4f60ece5.css.map",
-    "main.8c93b271.js.map": "/wheres-waldo-app/static/js/main.8c93b271.js.map"
+    "main.90815d6d.css.map": "/wheres-waldo-app/static/css/main.90815d6d.css.map",
+    "main.6451f8d5.js.map": "/wheres-waldo-app/static/js/main.6451f8d5.js.map"
   },
   "entrypoints": [
-    "static/css/main.4f60ece5.css",
-    "static/js/main.8c93b271.js"
+    "static/css/main.90815d6d.css",
+    "static/js/main.6451f8d5.js"
   ]
 }
