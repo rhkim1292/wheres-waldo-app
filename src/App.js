@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import GameImage from './components/GameImage';
 import TargetingBox from './components/TargetingBox';
 import GameAlerts from './components/GameAlerts';
+import GameMenu from './components/GameMenu';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
@@ -30,6 +31,7 @@ const db = getFirestore(app);
 function App() {
   const [userIsTagging, setUserIsTagging] = useState(false);
   const [listOfChars, setListOfChars] = useState([]);
+  const [displayingMenu, setDisplayingMenu] = useState(true);
   const [displayingAlert, setDisplayingAlert] = useState(false);
   const [charFound, setCharFound] = useState(false);
   const [foundCharName, setFoundCharName] = useState('');
@@ -151,11 +153,16 @@ function App() {
           handleClick={handleImgClick}
         />
       </div>
-      <TargetingBox
-        listOfChars={listOfChars}
-        userIsTagging={userIsTagging}
-        handleCharClick={handleCharClick}
-      />
+      {displayingMenu ? null : (
+        <TargetingBox
+          listOfChars={listOfChars}
+          userIsTagging={userIsTagging}
+          handleCharClick={handleCharClick}
+        />
+      )}
+      {displayingMenu ? (
+        <GameMenu setDisplayingMenu={setDisplayingMenu} />
+      ) : null}
       {displayingAlert ? displayAlert() : null}
     </div>
   );

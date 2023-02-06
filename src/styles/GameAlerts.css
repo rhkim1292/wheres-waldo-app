@@ -1,9 +1,11 @@
 div.game-alert {
   position: fixed;
-  top: 1rem;
+  top: 2vw;
   left: 50%;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
+  font-size: 1.3vw;
+  font-weight: bold;
   color: white;
   pointer-events: none;
   transform: translateX(-50%);
