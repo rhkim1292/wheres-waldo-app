@@ -37,16 +37,24 @@ function App() {
   const [foundCharName, setFoundCharName] = useState('');
 
   useEffect(() => {
-    const retrieveCharData = async () => {
-      const querySnapshot = await getDocs(collection(db, 'marioImage'));
-      const newListOfChars = [];
-      querySnapshot.forEach((doc) => {
-        newListOfChars.push(doc.data());
-      });
-      setListOfChars(newListOfChars);
-    };
     retrieveCharData();
   }, []);
+
+  useEffect(() => {
+    if (listOfChars.length < 1) {
+      setDisplayingMenu(true);
+      retrieveCharData();
+    }
+  }, [listOfChars.length]);
+
+  const retrieveCharData = async () => {
+    const querySnapshot = await getDocs(collection(db, 'marioImage'));
+    const newListOfChars = [];
+    querySnapshot.forEach((doc) => {
+      newListOfChars.push(doc.data());
+    });
+    setListOfChars(newListOfChars);
+  };
 
   const checkOverlap = (targetingBoxRect, charObj) => {
     const gameImageRect = document
@@ -136,13 +144,6 @@ function App() {
       );
     }
   };
-
-  // const setAlertRemovalTimeout = (time) => {
-  //   setTimeout(() => {
-  //     const gameAlertDiv = document.querySelector('div.game-alert');
-  //     gameAlertDiv.display = 'none';
-  //   }, time);
-  // };
 
   return (
     <div className="App">

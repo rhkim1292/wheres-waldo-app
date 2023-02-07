@@ -2,7 +2,6 @@ import '../styles/GameMenu.css';
 import cappy from '../images/cappy.png';
 import superbell from '../images/superbell.png';
 import yoshiegg from '../images/yoshiegg.png';
-// import { useEffect, useState } from 'react';
 
 function GameMenu(props) {
   return (
