@@ -5,6 +5,7 @@ import GameImage from './components/GameImage';
 import TargetingBox from './components/TargetingBox';
 import GameAlerts from './components/GameAlerts';
 import GameMenu from './components/GameMenu';
+import Navbar from './components/Navbar';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
@@ -35,13 +36,18 @@ function App() {
   const [displayingAlert, setDisplayingAlert] = useState(false);
   const [charFound, setCharFound] = useState(false);
   const [foundCharName, setFoundCharName] = useState('');
+  const [gameEnd, setGameEnd] = useState(false);
+  // const [timerSeconds, setTimerSeconds] = useState(0);
 
+  // Run once on initial mount
   useEffect(() => {
     retrieveCharData();
   }, []);
 
+  // Run every time the length of listOfChars changes
   useEffect(() => {
     if (listOfChars.length < 1) {
+      setGameEnd(true);
       setDisplayingMenu(true);
       retrieveCharData();
     }
@@ -148,6 +154,7 @@ function App() {
   return (
     <div className="App">
       <div className="game-container">
+        <Navbar gameEnd={gameEnd} displayingMenu={displayingMenu} />
         <GameImage
           imgSrc={mario}
           onMouseMove={onMouseMove}
@@ -162,7 +169,7 @@ function App() {
         />
       )}
       {displayingMenu ? (
-        <GameMenu setDisplayingMenu={setDisplayingMenu} />
+        <GameMenu setDisplayingMenu={setDisplayingMenu} gameEnd={gameEnd} />
       ) : null}
       {displayingAlert ? displayAlert() : null}
     </div>

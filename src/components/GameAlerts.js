@@ -9,7 +9,7 @@ function GameAlerts(props) {
       props.setDisplayingAlert(false);
     }, props.delay);
     return () => clearTimeout(timer);
-  }, [props.delay, props]);
+  }, [props]);
   const alertStyle = {
     backgroundColor: props.bgColor,
     display: props.display,

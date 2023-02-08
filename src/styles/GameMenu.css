@@ -1,6 +1,6 @@
 div.menu-background {
   position: fixed;
-  /* z-index: 0; */
+  z-index: 3;
   background-color: rgba(0, 0, 0, 0.895);
   top: 0;
   left: 0;

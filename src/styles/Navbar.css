@@ -1,0 +1,15 @@
+nav.navbar {
+  position: fixed;
+  width: 98.8vw;
+  height: 7vw;
+  background-color: #890209;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+nav.navbar h1.time-display {
+  font-size: 7vw;
+  margin: 0;
+}

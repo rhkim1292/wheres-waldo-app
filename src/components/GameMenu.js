@@ -4,6 +4,16 @@ import superbell from '../images/superbell.png';
 import yoshiegg from '../images/yoshiegg.png';
 
 function GameMenu(props) {
+  // const startTimer = () => {
+  //   props.setTimerIntervalID(
+  //     setInterval(() => {
+  //       props.setTimerSeconds(props.timerSeconds + 1);
+  //       console.log(props.timerSeconds);
+  //     }),
+  //     100000
+  //   );
+  // };
+
   return (
     <div className="menu-background">
       <div className="menu-flex-container">
