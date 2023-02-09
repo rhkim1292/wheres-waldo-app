@@ -12,7 +12,6 @@ function GameAlerts(props) {
   }, [props]);
   const alertStyle = {
     backgroundColor: props.bgColor,
-    display: props.display,
   };
   return visible ? (
     <div className="game-alert" style={alertStyle}>

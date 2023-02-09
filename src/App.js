@@ -133,7 +133,6 @@ function App() {
         <GameAlerts
           displayedText={`You found ${foundCharName}!`}
           bgColor="#080"
-          display="block"
           setDisplayingAlert={setDisplayingAlert}
           delay={3000}
         />
@@ -143,7 +142,6 @@ function App() {
         <GameAlerts
           displayedText={`Wrong! Keep looking!`}
           bgColor="red"
-          display="block"
           setDisplayingAlert={setDisplayingAlert}
           delay={3000}
         />
@@ -154,7 +152,12 @@ function App() {
   return (
     <div className="App">
       <div className="game-container">
-        <Navbar gameEnd={gameEnd} displayingMenu={displayingMenu} />
+        <Navbar
+          gameEnd={gameEnd}
+          displayingMenu={displayingMenu}
+          listOfChars={listOfChars}
+          setListOfChars={setListOfChars}
+        />
         <GameImage
           imgSrc={mario}
           onMouseMove={onMouseMove}
@@ -169,7 +172,11 @@ function App() {
         />
       )}
       {displayingMenu ? (
-        <GameMenu setDisplayingMenu={setDisplayingMenu} gameEnd={gameEnd} />
+        <GameMenu
+          setDisplayingMenu={setDisplayingMenu}
+          setGameEnd={setGameEnd}
+          gameEnd={gameEnd}
+        />
       ) : null}
       {displayingAlert ? displayAlert() : null}
     </div>

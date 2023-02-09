@@ -1,0 +1,38 @@
+ul.char-list {
+  position: absolute;
+  list-style-type: none;
+  cursor: default;
+  background-color: rgba(255, 255, 255, 0.907);
+  color: black;
+  width: 20vw;
+  padding: 1vw;
+  padding-top: 1.4vw;
+  margin: 0;
+  border-radius: 1.3vw;
+  transform: translate(-20%);
+  top: 6vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3vw;
+  font-size: 2vw;
+  pointer-events: none;
+}
+
+ul.char-list li.char-list-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4vw;
+}
+
+ul.char-list li.char-list-row div.img-col {
+  width: 5vw;
+}
+
+ul.char-list li.char-list-row div.img-col img {
+  width: 5vw;
+}
+
+ul.char-list li.char-list-row div.name-col {
+  width: 9vw;
+}
