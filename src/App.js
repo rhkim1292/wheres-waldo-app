@@ -31,13 +31,13 @@ const db = getFirestore(app);
 
 function App() {
   const [userIsTagging, setUserIsTagging] = useState(false);
-  const [listOfChars, setListOfChars] = useState([]);
+  const [listOfChars, setListOfChars] = useState([1]);
   const [displayingMenu, setDisplayingMenu] = useState(true);
   const [displayingAlert, setDisplayingAlert] = useState(false);
   const [charFound, setCharFound] = useState(false);
   const [foundCharName, setFoundCharName] = useState('');
   const [gameEnd, setGameEnd] = useState(false);
-  // const [timerSeconds, setTimerSeconds] = useState(0);
+  const [userResultTime, setUserResultTime] = useState({});
 
   // Run once on initial mount
   useEffect(() => {
@@ -49,6 +49,7 @@ function App() {
     if (listOfChars.length < 1) {
       setGameEnd(true);
       setDisplayingMenu(true);
+      setDisplayingAlert(false);
       retrieveCharData();
     }
   }, [listOfChars.length]);
@@ -113,11 +114,10 @@ function App() {
           );
           setCharFound(true);
           setFoundCharName(charToCheck);
-          setDisplayingAlert(true);
         } else {
           setCharFound(false);
-          setDisplayingAlert(true);
         }
+        setDisplayingAlert(true);
       }
     }
     setUserIsTagging(false);
@@ -156,7 +156,9 @@ function App() {
           gameEnd={gameEnd}
           displayingMenu={displayingMenu}
           listOfChars={listOfChars}
-          setListOfChars={setListOfChars}
+          setUserResultTime={setUserResultTime}
+          setGameEnd={setGameEnd}
+          setDisplayingMenu={setDisplayingMenu}
         />
         <GameImage
           imgSrc={mario}
@@ -176,6 +178,8 @@ function App() {
           setDisplayingMenu={setDisplayingMenu}
           setGameEnd={setGameEnd}
           gameEnd={gameEnd}
+          userResultTime={userResultTime}
+          retrieveCharData={retrieveCharData}
         />
       ) : null}
       {displayingAlert ? displayAlert() : null}

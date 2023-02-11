@@ -8,15 +8,33 @@ function Navbar(props) {
   const [timerSeconds, setTimerSeconds] = useState(0);
   const [displayingCharList, setDisplayingCharList] = useState(false);
 
+  const {
+    gameEnd,
+    displayingMenu,
+    listOfChars,
+    setUserResultTime,
+    setGameEnd,
+    setDisplayingMenu,
+  } = props;
+
   useEffect(() => {
-    if (props.displayingMenu) {
+    if (gameEnd) {
+      setUserResultTime({
+        hours: timerHours,
+        minutes: timerMinutes,
+        seconds: timerSeconds,
+      });
+      setDisplayingCharList(false);
+    }
+
+    if (!gameEnd && displayingMenu) {
       setTimerHours(0);
       setTimerMinutes(0);
       setTimerSeconds(0);
-      setDisplayingCharList(false);
     }
+
     const timer = setTimeout(() => {
-      if (props.displayingMenu) {
+      if (displayingMenu) {
         return;
       }
       if (timerSeconds === 59) {
@@ -36,7 +54,14 @@ function Navbar(props) {
       }
     }, 1000);
     return () => clearTimeout(timer);
-  }, [timerSeconds, props.displayingMenu, timerMinutes, timerHours]);
+  }, [
+    timerSeconds,
+    displayingMenu,
+    timerMinutes,
+    timerHours,
+    gameEnd,
+    setUserResultTime,
+  ]);
 
   const toggleCharList = (e) => {
     setDisplayingCharList(!displayingCharList);
@@ -47,7 +72,8 @@ function Navbar(props) {
       <h1
         className="menu-logo nav-link"
         onClick={() => {
-          props.setListOfChars([]);
+          setGameEnd(false);
+          setDisplayingMenu(true);
         }}
       >
         <span style={{ color: 'white' }}>Find-a </span>
@@ -65,7 +91,7 @@ function Navbar(props) {
       >
         Characters
         {displayingCharList ? (
-          <CharacterList listOfChars={props.listOfChars} />
+          <CharacterList listOfChars={listOfChars} />
         ) : null}
       </h1>
     </nav>
