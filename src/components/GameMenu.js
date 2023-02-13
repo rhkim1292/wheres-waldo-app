@@ -4,6 +4,12 @@ import superbell from '../images/superbell.png';
 import yoshiegg from '../images/yoshiegg.png';
 
 function GameMenu(props) {
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    console.log(formData.get('username'));
+    props.setSubmitScore(false);
+  };
   return (
     <div className="menu-background">
       <div className="menu-flex-container">
@@ -11,38 +17,65 @@ function GameMenu(props) {
           <span style={{ color: 'white' }}>Find-a </span>
           <span style={{ color: 'red' }}>Me!</span>
         </h1>
-        {props.gameEnd ? (
-          <div className="menu-results">
-            <div className="high-scores">
-              <h1 className="high-scores-title">High Scores</h1>
-              <ol>
-                <li>test</li>
-                <li>test</li>
-              </ol>
+        {props.loadingState ? (
+          <div className="menu-loading">Loading...</div>
+        ) : props.gameEnd ? (
+          props.submitScore ? (
+            <div className="menu-submit">
+              <h1>Congrats! You made it within the top 10 fastest times!</h1>
+              <form onSubmit={handleFormSubmit}>
+                <label htmlFor="userName">
+                  Enter a 3-letter name to display on the leaderboard:{' '}
+                </label>
+                <input id="userName" name="username" />
+                <button type="submit">Submit</button>
+              </form>
             </div>
-            <div className="user-time">
-              <h1 className="your-time-title">Your Time</h1>
-              <h2 className="result-time">{`${
-                (props.userResultTime.hours < 10 ? '0' : '') +
-                props.userResultTime.hours
-              }:${
-                (props.userResultTime.minutes < 10 ? '0' : '') +
-                props.userResultTime.minutes
-              }:${
-                (props.userResultTime.seconds < 10 ? '0' : '') +
-                props.userResultTime.seconds
-              }`}</h2>
-              <button
-                onClick={() => {
-                  props.setGameEnd(false);
-                  props.setDisplayingMenu(true);
-                  props.retrieveCharData();
-                }}
-              >
-                Retry
-              </button>
+          ) : (
+            <div className="menu-results">
+              <div className="high-scores">
+                <h1 className="high-scores-title">High Scores</h1>
+                <ol>
+                  {props.listOfScores.map((currScore) => {
+                    return (
+                      <li key={currScore.name}>{`${currScore.name}: ${
+                        (currScore.timeHours < 10 ? '0' : '') +
+                        currScore.timeHours
+                      }:${
+                        (currScore.timeMinutes < 10 ? '0' : '') +
+                        currScore.timeMinutes
+                      }:${
+                        (currScore.timeSeconds < 10 ? '0' : '') +
+                        currScore.timeSeconds
+                      }`}</li>
+                    );
+                  })}
+                </ol>
+              </div>
+              <div className="user-time">
+                <h1 className="your-time-title">Your Time</h1>
+                <h2 className="result-time">{`${
+                  (props.userResultTime.timeHours < 10 ? '0' : '') +
+                  props.userResultTime.timeHours
+                }:${
+                  (props.userResultTime.timeMinutes < 10 ? '0' : '') +
+                  props.userResultTime.timeMinutes
+                }:${
+                  (props.userResultTime.timeSeconds < 10 ? '0' : '') +
+                  props.userResultTime.timeSeconds
+                }`}</h2>
+                <button
+                  onClick={() => {
+                    props.setGameEnd(false);
+                    props.setDisplayingMenu(true);
+                    props.retrieveCharData();
+                  }}
+                >
+                  Retry
+                </button>
+              </div>
             </div>
-          </div>
+          )
         ) : (
           <div className="menu-main">
             <h2>Find us in the following image!</h2>

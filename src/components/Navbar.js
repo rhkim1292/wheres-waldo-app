@@ -20,9 +20,9 @@ function Navbar(props) {
   useEffect(() => {
     if (gameEnd) {
       setUserResultTime({
-        hours: timerHours,
-        minutes: timerMinutes,
-        seconds: timerSeconds,
+        timeHours: timerHours,
+        timeMinutes: timerMinutes,
+        timeSeconds: timerSeconds,
       });
       setDisplayingCharList(false);
     }

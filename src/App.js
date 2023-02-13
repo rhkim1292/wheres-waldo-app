@@ -38,6 +38,9 @@ function App() {
   const [foundCharName, setFoundCharName] = useState('');
   const [gameEnd, setGameEnd] = useState(false);
   const [userResultTime, setUserResultTime] = useState({});
+  const [submitScore, setSubmitScore] = useState(false);
+  const [listOfScores, setListOfScores] = useState([]);
+  const [loadingState, setLoadingState] = useState(false);
 
   // Run once on initial mount
   useEffect(() => {
@@ -53,6 +56,43 @@ function App() {
       retrieveCharData();
     }
   }, [listOfChars.length]);
+
+  useEffect(() => {
+    const retrieveScoreData = async () => {
+      setLoadingState(true);
+      const querySnapshot = await getDocs(collection(db, 'highScores'));
+      const newListOfScores = [];
+      const convertPlayerTimeToSeconds = (playerTime) => {
+        return (
+          playerTime.timeHours * 60 * 60 +
+          playerTime.timeMinutes * 60 +
+          playerTime.timeSeconds
+        );
+      };
+
+      querySnapshot.forEach((doc) => {
+        newListOfScores.push(doc.data());
+      });
+
+      newListOfScores.sort((a, b) => {
+        return convertPlayerTimeToSeconds(a) - convertPlayerTimeToSeconds(b);
+      });
+
+      setListOfScores(newListOfScores);
+
+      if (
+        newListOfScores.length < 10 ||
+        convertPlayerTimeToSeconds(newListOfScores[9]) >
+          convertPlayerTimeToSeconds(userResultTime)
+      ) {
+        setSubmitScore(true);
+      }
+      setLoadingState(false);
+    };
+    if (displayingMenu && gameEnd) {
+      retrieveScoreData();
+    }
+  }, [displayingMenu, gameEnd, userResultTime]);
 
   const retrieveCharData = async () => {
     const querySnapshot = await getDocs(collection(db, 'marioImage'));
@@ -180,6 +220,10 @@ function App() {
           gameEnd={gameEnd}
           userResultTime={userResultTime}
           retrieveCharData={retrieveCharData}
+          submitScore={submitScore}
+          setSubmitScore={setSubmitScore}
+          loadingState={loadingState}
+          listOfScores={listOfScores}
         />
       ) : null}
       {displayingAlert ? displayAlert() : null}
