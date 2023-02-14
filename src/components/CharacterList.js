@@ -8,19 +8,19 @@ function CharacterList(props) {
     switch (char.name) {
       case 'Cappy':
         return (
-          <div class="img-col">
+          <div className="img-col">
             <img src={cappy} alt={char.name} />
           </div>
         );
       case 'Super Bell':
         return (
-          <div class="img-col">
+          <div className="img-col">
             <img src={superbell} alt={char.name} />
           </div>
         );
       case 'Yoshi Egg':
         return (
-          <div class="img-col">
+          <div className="img-col">
             <img src={yoshiegg} alt={char.name} />
           </div>
         );

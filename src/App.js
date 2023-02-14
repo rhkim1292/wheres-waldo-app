@@ -12,7 +12,13 @@ import { initializeApp } from 'firebase/app';
 // import { getAnalytics } from 'firebase/analytics';
 
 // TODO: Add SDKs for Firebase products that you want to use
-import { getFirestore, getDocs, collection } from 'firebase/firestore';
+import {
+  getFirestore,
+  getDocs,
+  collection,
+  deleteDoc,
+  addDoc,
+} from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyB4Ob5qUsKzmz_fe_4Kg8nHFz0MK4C0P6k',
@@ -62,13 +68,6 @@ function App() {
       setLoadingState(true);
       const querySnapshot = await getDocs(collection(db, 'highScores'));
       const newListOfScores = [];
-      const convertPlayerTimeToSeconds = (playerTime) => {
-        return (
-          playerTime.timeHours * 60 * 60 +
-          playerTime.timeMinutes * 60 +
-          playerTime.timeSeconds
-        );
-      };
 
       querySnapshot.forEach((doc) => {
         newListOfScores.push(doc.data());
@@ -86,6 +85,8 @@ function App() {
           convertPlayerTimeToSeconds(userResultTime)
       ) {
         setSubmitScore(true);
+      } else {
+        setSubmitScore(false);
       }
       setLoadingState(false);
     };
@@ -101,6 +102,45 @@ function App() {
       newListOfChars.push(doc.data());
     });
     setListOfChars(newListOfChars);
+  };
+
+  const convertPlayerTimeToSeconds = (playerTime) => {
+    return (
+      playerTime.timeHours * 60 * 60 +
+      playerTime.timeMinutes * 60 +
+      playerTime.timeSeconds
+    );
+  };
+
+  const sortScoresAscending = (scoreList) => {
+    scoreList.sort((a, b) => {
+      return convertPlayerTimeToSeconds(a) - convertPlayerTimeToSeconds(b);
+    });
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setLoadingState(true);
+    const highScoresColRef = collection(db, 'highScores');
+    const querySnapshot = await getDocs(highScoresColRef);
+    querySnapshot.forEach(async (doc) => {
+      await deleteDoc(doc.ref);
+    });
+    const formData = new FormData(e.target);
+    const userScoreObj = { ...userResultTime, name: formData.get('username') };
+    if (listOfScores.length < 10) {
+      listOfScores.push(userScoreObj);
+    } else {
+      listOfScores[9] = userScoreObj;
+    }
+
+    sortScoresAscending(listOfScores);
+    setListOfScores(listOfScores);
+    listOfScores.forEach(async (currScore) => {
+      await addDoc(highScoresColRef, currScore);
+    });
+    setSubmitScore(false);
+    setLoadingState(false);
   };
 
   const checkOverlap = (targetingBoxRect, charObj) => {
@@ -223,7 +263,9 @@ function App() {
           submitScore={submitScore}
           setSubmitScore={setSubmitScore}
           loadingState={loadingState}
+          setLoadingState={setLoadingState}
           listOfScores={listOfScores}
+          handleFormSubmit={handleFormSubmit}
         />
       ) : null}
       {displayingAlert ? displayAlert() : null}

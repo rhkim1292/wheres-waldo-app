@@ -4,12 +4,6 @@ import superbell from '../images/superbell.png';
 import yoshiegg from '../images/yoshiegg.png';
 
 function GameMenu(props) {
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    console.log(formData.get('username'));
-    props.setSubmitScore(false);
-  };
   return (
     <div className="menu-background">
       <div className="menu-flex-container">
@@ -23,7 +17,7 @@ function GameMenu(props) {
           props.submitScore ? (
             <div className="menu-submit">
               <h1>Congrats! You made it within the top 10 fastest times!</h1>
-              <form onSubmit={handleFormSubmit}>
+              <form onSubmit={props.handleFormSubmit}>
                 <label htmlFor="userName">
                   Enter a 3-letter name to display on the leaderboard:{' '}
                 </label>
@@ -36,9 +30,9 @@ function GameMenu(props) {
               <div className="high-scores">
                 <h1 className="high-scores-title">High Scores</h1>
                 <ol>
-                  {props.listOfScores.map((currScore) => {
+                  {props.listOfScores.map((currScore, index) => {
                     return (
-                      <li key={currScore.name}>{`${currScore.name}: ${
+                      <li key={currScore.name + index}>{`${currScore.name}: ${
                         (currScore.timeHours < 10 ? '0' : '') +
                         currScore.timeHours
                       }:${
