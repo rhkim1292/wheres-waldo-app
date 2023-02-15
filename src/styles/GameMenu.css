@@ -15,7 +15,7 @@ div.menu-flex-container {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 1.3vw;
+  font-size: 1.6vw;
 }
 
 div.menu-main,
@@ -23,7 +23,7 @@ div.menu-results,
 div.menu-submit,
 div.menu-loading {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 2vw;
   padding: 2vw 2vw;
   gap: 2vw;
   display: flex;
@@ -36,7 +36,34 @@ div.menu-main {
 }
 
 div.menu-results {
-  width: 60vw;
+  width: 40vw;
+  justify-content: space-evenly;
+}
+
+div.menu-results div.user-time,
+div.menu-results div.high-scores {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1vw;
+}
+
+div.menu-results div.user-time h1,
+div.menu-results div.high-scores h1 {
+  font-size: 3vw;
+}
+
+div.menu-results div.high-scores ol {
+  font-size: 2vw;
+  padding-left: 2.3vw;
+}
+
+div.menu-results div.user-time h1,
+div.menu-results div.user-time h2,
+div.menu-results div.high-scores h1,
+div.menu-results div.high-scores ol {
+  margin: 0;
 }
 
 div.menu-submit {
@@ -48,7 +75,7 @@ div.menu-submit {
 div.menu-submit h1 {
   margin: 0;
   text-align: center;
-  font-size: 1.5vw;
+  font-size: 1.6vw;
 }
 
 div.menu-submit form {
@@ -58,9 +85,14 @@ div.menu-submit form {
   gap: 0.5vw;
 }
 
+form label {
+  font-size: 1.6vw;
+}
 form input#userName {
-  width: 3vw;
+  width: 3.3vw;
   text-align: center;
+  font-size: 2vw;
+  text-transform: uppercase;
 }
 
 div.menu-main h2 {
@@ -100,4 +132,31 @@ div.menu-main button:hover {
 
 div.menu-main button:active {
   background-color: hsl(0, 100%, 40%);
+}
+
+.menu-btn {
+  padding: 0.2em 0.8em;
+  border-radius: 1em;
+  cursor: pointer;
+  color: white;
+  background-color: hsl(0, 100%, 50%);
+  font-size: 2.5vw;
+  font-weight: bold;
+  border: 3px solid black;
+}
+
+.menu-btn:hover {
+  background-color: hsl(0, 100%, 60%);
+}
+
+.menu-btn:active {
+  background-color: hsl(0, 100%, 40%);
+}
+
+.retry-btn {
+  font-size: 2.5vw;
+}
+
+.submit-btn {
+  font-size: 2vw;
 }

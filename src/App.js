@@ -127,7 +127,10 @@ function App() {
       await deleteDoc(doc.ref);
     });
     const formData = new FormData(e.target);
-    const userScoreObj = { ...userResultTime, name: formData.get('username') };
+    const userScoreObj = {
+      ...userResultTime,
+      name: formData.get('username').toUpperCase(),
+    };
     if (listOfScores.length < 10) {
       listOfScores.push(userScoreObj);
     } else {

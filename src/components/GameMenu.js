@@ -21,8 +21,17 @@ function GameMenu(props) {
                 <label htmlFor="userName">
                   Enter a 3-letter name to display on the leaderboard:{' '}
                 </label>
-                <input id="userName" name="username" />
-                <button type="submit">Submit</button>
+                <input
+                  id="userName"
+                  name="username"
+                  maxLength="3"
+                  minLength="3"
+                  pattern="[a-zA-Z0-9]+"
+                  required
+                />
+                <button className="menu-btn submit-btn" type="submit">
+                  Submit
+                </button>
               </form>
             </div>
           ) : (
@@ -32,7 +41,7 @@ function GameMenu(props) {
                 <ol>
                   {props.listOfScores.map((currScore, index) => {
                     return (
-                      <li key={currScore.name + index}>{`${currScore.name}: ${
+                      <li key={currScore.name + index}>{`${currScore.name} ${
                         (currScore.timeHours < 10 ? '0' : '') +
                         currScore.timeHours
                       }:${
@@ -59,6 +68,7 @@ function GameMenu(props) {
                   props.userResultTime.timeSeconds
                 }`}</h2>
                 <button
+                  className="menu-btn retry-btn"
                   onClick={() => {
                     props.setGameEnd(false);
                     props.setDisplayingMenu(true);
@@ -98,6 +108,7 @@ function GameMenu(props) {
               </div>
             </div>
             <button
+              className="menu-btn"
               onClick={() => {
                 props.setGameEnd(false);
                 props.setDisplayingMenu(false);

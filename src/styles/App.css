@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
 div.App {
   display: flex;
+  font-family: 'VT323', monospace;
 }
 div.App img.game-image {
   width: 98.8vw;
@@ -8,4 +11,9 @@ div.App img.game-image {
 div.game-container {
   position: relative;
   display: flex;
+}
+
+button,
+input {
+  font-family: 'VT323', monospace;
 }
