@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/wheres-waldo-app/static/css/main.ff560a39.css",
-    "main.js": "/wheres-waldo-app/static/js/main.6b1600f1.js",
+    "main.css": "/wheres-waldo-app/static/css/main.e1f29730.css",
+    "main.js": "/wheres-waldo-app/static/js/main.b2ecdcc5.js",
     "static/media/superbell.png": "/wheres-waldo-app/static/media/superbell.89969da22984e73c99de.png",
     "static/media/mario.jpg": "/wheres-waldo-app/static/media/mario.7dda37c4454d6cc034b8.jpg",
     "static/media/cappy.png": "/wheres-waldo-app/static/media/cappy.c16206dabac61d638acd.png",
     "static/media/yoshiegg.png": "/wheres-waldo-app/static/media/yoshiegg.ffcfd6d84ca53c3cb0ac.png",
     "static/media/SuperMarioBros-ov7d.ttf": "/wheres-waldo-app/static/media/SuperMarioBros-ov7d.5cb94da1fd8966222fe1.ttf",
     "index.html": "/wheres-waldo-app/index.html",
-    "main.ff560a39.css.map": "/wheres-waldo-app/static/css/main.ff560a39.css.map",
-    "main.6b1600f1.js.map": "/wheres-waldo-app/static/js/main.6b1600f1.js.map"
+    "main.e1f29730.css.map": "/wheres-waldo-app/static/css/main.e1f29730.css.map",
+    "main.b2ecdcc5.js.map": "/wheres-waldo-app/static/js/main.b2ecdcc5.js.map"
   },
   "entrypoints": [
-    "static/css/main.ff560a39.css",
-    "static/js/main.6b1600f1.js"
+    "static/css/main.e1f29730.css",
+    "static/js/main.b2ecdcc5.js"
   ]
 }
